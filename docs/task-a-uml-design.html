@@ -1,0 +1,579 @@
+<style>
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #F5F7F8;
+      --surface: #FFFFFF;
+      --text: #1C2B33;
+      --text-muted: #5B6B72;
+      --accent: #0E7C7B;
+      --accent-soft: #E4F3F2;
+      --border: #DCE3E5;
+      --code-bg: #F0F4F4;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1719;
+      --surface: #16211F;
+      --text: #E4ECEC;
+      --text-muted: #9FB0B2;
+      --accent: #2DD4C7;
+      --accent-soft: #133331;
+      --border: #24312F;
+      --code-bg: #101B19;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F5F7F8; --surface: #FFFFFF; --text: #1C2B33; --text-muted: #5B6B72;
+    --accent: #0E7C7B; --accent-soft: #E4F3F2; --border: #DCE3E5; --code-bg: #F0F4F4;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1719; --surface: #16211F; --text: #E4ECEC; --text-muted: #9FB0B2;
+    --accent: #2DD4C7; --accent-soft: #133331; --border: #24312F; --code-bg: #101B19;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    margin: 0;
+    padding: 0 20px 80px;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  header.page-head {
+    max-width: 760px;
+    margin: 56px auto 8px;
+    padding: 0 0 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+  h1 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: 34px;
+    line-height: 1.15;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 16px;
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  nav.toc {
+    max-width: 760px;
+    margin: 24px auto 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    position: sticky;
+    top: 12px;
+    z-index: 5;
+    background: var(--bg);
+    padding: 10px 0;
+  }
+  nav.toc a {
+    font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 12.5px;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 6px 11px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible { border-color: var(--accent); color: var(--accent); }
+  nav.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  section {
+    max-width: 760px;
+    margin: 0 auto 64px;
+    scroll-margin-top: 70px;
+  }
+  section.wide { max-width: 900px; }
+
+  h2 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  h2 .num {
+    font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-right: 10px;
+  }
+  h3 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: 19px;
+    margin: 32px 0 4px;
+  }
+  p { margin: 12px 0; max-width: 68ch; }
+  section.wide p { max-width: 68ch; }
+  ul, ol { margin: 12px 0; padding-left: 22px; max-width: 68ch; }
+  li { margin: 6px 0; }
+  strong { color: var(--text); }
+  code {
+    font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1em 0.4em;
+  }
+
+  .diagram-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 18px 0 8px;
+    overflow-x: auto;
+  }
+  .diagram-caption {
+    font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    margin: 0 0 24px;
+  }
+
+  .assumption-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 68ch;
+  }
+  .assumption {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+  }
+  .assumption .label {
+    font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 4px;
+    display: block;
+  }
+  .assumption p { margin: 0; max-width: none; }
+
+  footer {
+    max-width: 760px;
+    margin: 40px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 27px; }
+    header.page-head { margin-top: 32px; }
+  }
+</style>
+
+<header class="page-head">
+  <p class="eyebrow">CIS6003 Advanced Programming — Task A · 20 marks</p>
+  <h1>Sunrise Dental Clinic<br>System Design with UML</h1>
+  <p class="subtitle">Use case, class, and sequence diagrams for the appointment and patient management system, derived directly from the implemented Spring Boot backend and JavaFX client — not a speculative design produced ahead of the code.</p>
+</header>
+
+<nav class="toc">
+  <a href="#usecase">A.1 Use Case Diagram</a>
+  <a href="#class">A.2 Class Diagram</a>
+  <a href="#seq-register">A.3.1 Register Appointment</a>
+  <a href="#seq-search">A.3.2 Display Details</a>
+  <a href="#seq-bill">A.3.3 Calculate &amp; Print Bill</a>
+  <a href="#assumptions">A.4 Assumptions</a>
+</nav>
+
+<div class="wrap">
+
+<section id="usecase" class="wide">
+  <h2><span class="num">A.1</span>Use Case Diagram</h2>
+  <p>Mermaid has no first-class use-case notation, so actors are drawn as boxed stick-figure nodes and use cases as stadium shapes inside the system boundary, which is the standard workaround and keeps the semantics — actor associations, <code>&lt;&lt;include&gt;&gt;</code>, and <code>&lt;&lt;extend&gt;&gt;</code> — fully intact.</p>
+
+  <div class="diagram-card">
+<pre class="mermaid">
+flowchart LR
+    Staff(["🧑‍⚕️ Staff Member<br/>(Reception / Admin)"])
+    Printer(["🖨️ Printer<br/>(external device)"])
+
+    subgraph SYS["Sunrise Dental Clinic System"]
+        direction TB
+        UC1(["Login"])
+        UC2(["Register New<br/>Appointment"])
+        UC3(["Check Dentist<br/>Availability"])
+        UC4(["Display Appointment<br/>Details"])
+        UC5(["Calculate and<br/>Print Bill"])
+        UC6(["Retrieve Appointment<br/>Record"])
+        UC7(["Print / Save<br/>Receipt"])
+        UC8(["View Daily Report"])
+        UC9(["View Help"])
+        UC10(["Exit System"])
+    end
+
+    Staff --- UC1
+    Staff --- UC2
+    Staff --- UC4
+    Staff --- UC5
+    Staff --- UC8
+    Staff --- UC9
+    Staff --- UC10
+
+    UC2 -.->|"&lt;&lt;include&gt;&gt;"| UC1
+    UC4 -.->|"&lt;&lt;include&gt;&gt;"| UC1
+    UC5 -.->|"&lt;&lt;include&gt;&gt;"| UC1
+    UC8 -.->|"&lt;&lt;include&gt;&gt;"| UC1
+    UC9 -.->|"&lt;&lt;include&gt;&gt;"| UC1
+
+    UC2 -.->|"&lt;&lt;include&gt;&gt;"| UC3
+    UC5 -.->|"&lt;&lt;include&gt;&gt;"| UC6
+
+    UC7 -.->|"&lt;&lt;extend&gt;&gt;"| UC5
+    UC7 --- Printer
+</pre>
+  </div>
+  <p class="diagram-caption">Fig. A.1 — Use case diagram: actors, core use cases, and include/extend relationships.</p>
+
+  <h3>Design decisions</h3>
+  <ul>
+    <li><strong>One actor, not two.</strong> <code>StaffUser.role</code> distinguishes <code>ADMIN</code> from <code>STAFF</code> in the data model, but every implemented endpoint grants both roles identical access. Drawing separate Administrator/Reception actors with different use cases would overstate what the system actually enforces, so both are represented as a single <em>Staff Member</em> actor. The role field is retained as a foundation for a future authorization rule, not a fiction the diagram invents.</li>
+    <li><strong><code>&lt;&lt;include&gt;&gt;</code> Login on every core function.</strong> This encodes the brief's requirement directly — "only authorized staff can use the system" — as one reusable precondition rather than repeating an authentication description inside five separate use cases.</li>
+    <li><strong><code>&lt;&lt;include&gt;&gt;</code> Check Dentist Availability.</strong> Modelled as its own use case because it is independently enforced twice in the implementation: a service-layer check before saving, and a <code>UNIQUE(dentist_id, appointment_date, appointment_time)</code> constraint in PostgreSQL as a safety net. This directly answers the scenario's stated pain point of double bookings.</li>
+    <li><strong><code>&lt;&lt;extend&gt;&gt;</code> Print / Save Receipt.</strong> Printing is an optional continuation of billing, not a mandatory step — staff can calculate and view a bill without sending it to a printer — so it extends rather than includes, and it is the one use case with a genuine external secondary actor (the printer).</li>
+  </ul>
+</section>
+
+<section id="class" class="wide">
+  <h2><span class="num">A.2</span>Class Diagram</h2>
+  <p>The diagram covers the persistent domain model and the service-layer classes that carry the design patterns required by Task B, so the two deliverables describe the same system rather than two different ones.</p>
+
+  <div class="diagram-card">
+<pre class="mermaid">
+classDiagram
+    class Patient {
+        -Long id
+        -String name
+        -String address
+        -String contactNumber
+        -LocalDateTime createdAt
+        +getName() String
+        +getContactNumber() String
+    }
+    class Dentist {
+        -Long id
+        -String name
+        -String specialization
+        -String contactNumber
+    }
+    class TreatmentType {
+        -Long id
+        -String name
+        -BigDecimal baseCost
+        -BigDecimal consultationFee
+    }
+    class Appointment {
+        -Long id
+        -String appointmentNumber
+        -LocalDate appointmentDate
+        -LocalTime appointmentTime
+        -AppointmentStatus status
+        +builder() Builder$
+    }
+    class AppointmentStatus {
+        &lt;&lt;enumeration&gt;&gt;
+        SCHEDULED
+        COMPLETED
+        CANCELLED
+    }
+    class Bill {
+        -Long id
+        -BigDecimal consultationFee
+        -BigDecimal treatmentCost
+        -BigDecimal totalAmount
+        -LocalDateTime generatedAt
+    }
+    class StaffUser {
+        -Long id
+        -String username
+        -String passwordHash
+        -String fullName
+        -StaffRole role
+        -boolean enabled
+    }
+    class StaffRole {
+        &lt;&lt;enumeration&gt;&gt;
+        ADMIN
+        STAFF
+    }
+
+    class BillingStrategy {
+        &lt;&lt;interface&gt;&gt;
+        +supports(TreatmentType) boolean
+        +calculateTreatmentCost(TreatmentType) BigDecimal
+    }
+    class StandardBillingStrategy
+    class SurgicalBillingStrategy
+    class OrthodonticBillingStrategy
+    class BillingStrategyFactory {
+        -List~BillingStrategy~ specificStrategies
+        -StandardBillingStrategy fallbackStrategy
+        +resolve(TreatmentType) BillingStrategy
+    }
+    class AppointmentNumberGenerator {
+        &lt;&lt;singleton&gt;&gt;
+        -AppointmentNumberGenerator instance$
+        -AtomicLong counter
+        +getInstance() AppointmentNumberGenerator$
+        +next() String
+    }
+    class AppointmentObserver {
+        &lt;&lt;interface&gt;&gt;
+        +onAppointmentCreated(Appointment) void
+    }
+    class ConsoleNotificationObserver
+    class AppointmentEventPublisher {
+        -List~AppointmentObserver~ observers
+        +publishAppointmentCreated(Appointment) void
+    }
+    class AppointmentService {
+        -AppointmentRepository appointmentRepository
+        -AppointmentEventPublisher eventPublisher
+        +register(AppointmentRegistrationRequest) Appointment
+        +findByAppointmentNumber(String) Appointment
+    }
+    class BillService {
+        -BillRepository billRepository
+        -BillingStrategyFactory billingStrategyFactory
+        +generateBill(String) Bill
+    }
+
+    Patient "1" --> "0..*" Appointment : books
+    Dentist "1" --> "0..*" Appointment : attends
+    TreatmentType "1" --> "0..*" Appointment : categorises
+    Appointment "1" *-- "0..1" Bill : owns
+    Appointment ..> AppointmentStatus
+    StaffUser ..> StaffRole
+
+    StandardBillingStrategy ..|> BillingStrategy
+    SurgicalBillingStrategy ..|> BillingStrategy
+    OrthodonticBillingStrategy ..|> BillingStrategy
+    BillingStrategyFactory o-- "0..*" BillingStrategy : resolves
+    BillService --> BillingStrategyFactory : uses
+    BillService ..> AppointmentService : depends on
+
+    ConsoleNotificationObserver ..|> AppointmentObserver
+    AppointmentEventPublisher o-- "0..*" AppointmentObserver : notifies
+    AppointmentService --> AppointmentEventPublisher : publishes to
+    AppointmentService ..> AppointmentNumberGenerator : uses
+</pre>
+  </div>
+  <p class="diagram-caption">Fig. A.2 — Class diagram: domain entities plus the Strategy, Factory, Singleton and Observer collaborators.</p>
+
+  <h3>Design decisions</h3>
+  <ul>
+    <li><strong>Normalised domain model, not flattened fields.</strong> The brief lists patient/appointment fields together, but they are modelled as separate <code>Patient</code>, <code>Dentist</code>, and <code>TreatmentType</code> entities related to <code>Appointment</code>, so one patient's repeat visits share a single record instead of re-entering their details every time — closer to how a real clinic's register works, and it is what makes the reporting and billing features possible without duplicate data.</li>
+    <li><strong>Composition: <code>Appointment *-- Bill</code>.</strong> A bill has no independent existence — it is created from, keyed to (<code>UNIQUE</code> foreign key), and conceptually owned by exactly one appointment. This is a stronger relationship than the plain associations to Patient/Dentist/TreatmentType, which is why it is drawn as composition rather than association.</li>
+    <li><strong>Aggregation for the pattern collaborators.</strong> <code>BillingStrategyFactory</code> and <code>AppointmentEventPublisher</code> each hold a collection of interchangeable implementations they use but do not exclusively own — Spring manages the actual bean lifecycle. That "uses, doesn't own" relationship is exactly what aggregation (open diamond) expresses, in contrast to the composition used for Bill.</li>
+    <li><strong>Patterns are visible as structure, not just labels.</strong> Strategy and Factory appear as the <code>BillingStrategy</code> hierarchy plus <code>BillingStrategyFactory</code>; Observer appears as <code>AppointmentObserver</code> plus <code>AppointmentEventPublisher</code>; Singleton is marked directly on <code>AppointmentNumberGenerator</code> with its static self-reference and static accessor. The Builder pattern used by <code>Appointment</code> is represented by its static <code>builder()</code> method rather than a fully expanded nested <code>Builder</code> class, to keep the diagram legible — the full implementation is in the source and discussed in the Task B write-up.</li>
+  </ul>
+</section>
+
+<section id="seq-register">
+  <h2><span class="num">A.3.1</span>Sequence — Register New Appointment</h2>
+  <p>Chosen because it is the most structurally significant of the six mandatory functions: it exercises validation, the Singleton appointment-number generator, the Builder-constructed entity, persistence, and the Observer notification fan-out in a single flow, and it includes the double-booking rejection path actually enforced by the code rather than only the happy path.</p>
+  <div class="diagram-card">
+<pre class="mermaid">
+sequenceDiagram
+    actor Staff
+    participant UI as RegisterAppointmentView
+    participant API as ApiClient
+    participant Ctrl as AppointmentController
+    participant Svc as AppointmentService
+    participant Repo as AppointmentRepository
+    participant Gen as AppointmentNumberGenerator
+    participant Pub as AppointmentEventPublisher
+    participant Obs as ConsoleNotificationObserver
+    participant DB as PostgreSQL
+
+    Staff->>UI: fill form, click "Register Appointment"
+    UI->>API: registerAppointment(request)
+    API->>Ctrl: POST /api/appointments (Bearer JWT)
+    Ctrl->>Svc: register(request)
+    Svc->>Repo: existsByDentist_IdAndDateAndTime(...)
+    Repo->>DB: SELECT ...
+    DB-->>Repo: no matching row
+    Repo-->>Svc: false (slot free)
+    Svc->>Gen: getInstance().next()
+    Gen-->>Svc: "APT-000123"
+    Svc->>Svc: Appointment.builder()....build()
+    Svc->>Repo: save(appointment)
+    Repo->>DB: INSERT
+    DB-->>Repo: saved row
+    Repo-->>Svc: Appointment
+    Svc->>Pub: publishAppointmentCreated(appointment)
+    Pub->>Obs: onAppointmentCreated(appointment)
+    Svc-->>Ctrl: Appointment
+    Ctrl-->>API: 201 Created (AppointmentResponse)
+    API-->>UI: AppointmentDto
+    UI-->>Staff: confirmation dialog with appointment number
+
+    alt dentist already booked for that date/time
+        DB-->>Repo: matching row exists
+        Repo-->>Svc: true (slot taken)
+        Svc-->>Ctrl: throw DoubleBookingException
+        Ctrl-->>API: 409 Conflict
+        API-->>UI: ApiException(message)
+        UI-->>Staff: inline error, form left editable
+    end
+</pre>
+  </div>
+  <p class="diagram-caption">Fig. A.3.1 — Sequence diagram: registering a new appointment, including the double-booking rejection path.</p>
+</section>
+
+<section id="seq-search">
+  <h2><span class="num">A.3.2</span>Sequence — Display Appointment Details</h2>
+  <p>The simplest of the three, included to show the read path and the not-found handling that <code>GlobalExceptionHandler</code> converts into a proper HTTP 404 rather than a raw stack trace reaching the client.</p>
+  <div class="diagram-card">
+<pre class="mermaid">
+sequenceDiagram
+    actor Staff
+    participant UI as SearchAppointmentView
+    participant API as ApiClient
+    participant Ctrl as AppointmentController
+    participant Svc as AppointmentService
+    participant Repo as AppointmentRepository
+    participant DB as PostgreSQL
+
+    Staff->>UI: enter appointment number, click Search
+    UI->>API: getAppointment(number)
+    API->>Ctrl: GET /api/appointments/{number} (Bearer JWT)
+    Ctrl->>Svc: findByAppointmentNumber(number)
+    Svc->>Repo: findByAppointmentNumberWithDetails(number)
+    Repo->>DB: SELECT ... JOIN patient, dentist, treatment_type
+
+    alt appointment exists
+        DB-->>Repo: row set
+        Repo-->>Svc: Appointment
+        Svc-->>Ctrl: Appointment
+        Ctrl-->>API: 200 OK (AppointmentResponse)
+        API-->>UI: AppointmentDto
+        UI-->>Staff: render patient &amp; appointment details
+    else no matching appointment number
+        DB-->>Repo: empty
+        Repo-->>Svc: empty
+        Svc-->>Ctrl: throw ResourceNotFoundException
+        Ctrl-->>API: 404 Not Found
+        API-->>UI: ApiException(message)
+        UI-->>Staff: "Appointment not found" message
+    end
+</pre>
+  </div>
+  <p class="diagram-caption">Fig. A.3.2 — Sequence diagram: searching for an appointment by its number.</p>
+</section>
+
+<section id="seq-bill">
+  <h2><span class="num">A.3.3</span>Sequence — Calculate and Print Bill</h2>
+  <p>Shows the Strategy/Factory pattern resolving a treatment-specific pricing rule at runtime, the idempotent branch that returns an already-generated bill instead of duplicating it, and the client-side print/save fallback.</p>
+  <div class="diagram-card">
+<pre class="mermaid">
+sequenceDiagram
+    actor Staff
+    participant UI as BillView
+    participant API as ApiClient
+    participant Ctrl as BillController
+    participant BSvc as BillService
+    participant ASvc as AppointmentService
+    participant Fac as BillingStrategyFactory
+    participant Strat as BillingStrategy
+    participant Repo as BillRepository
+    participant DB as PostgreSQL
+    participant Job as PrinterJob
+
+    Staff->>UI: enter appointment number, click Generate Bill
+    UI->>API: generateBill(number)
+    API->>Ctrl: GET /api/bills/{number} (Bearer JWT)
+    Ctrl->>BSvc: generateBill(number)
+    BSvc->>ASvc: findByAppointmentNumber(number)
+    ASvc-->>BSvc: Appointment
+    BSvc->>Repo: findByAppointment_IdWithDetails(id)
+    Repo->>DB: SELECT ...
+
+    alt bill already generated for this appointment
+        DB-->>Repo: existing bill row
+        Repo-->>BSvc: Bill
+    else first time this appointment is billed
+        DB-->>Repo: no row
+        Repo-->>BSvc: empty
+        BSvc->>Fac: resolve(treatmentType)
+        Fac-->>BSvc: matching BillingStrategy
+        BSvc->>Strat: calculateTreatmentCost(treatmentType)
+        Strat-->>BSvc: treatmentCost
+        BSvc->>BSvc: new Bill(appointment, fee, cost, total)
+        BSvc->>Repo: save(bill)
+        Repo->>DB: INSERT (trigger validates total = fee + cost)
+        DB-->>Repo: saved row
+        Repo-->>BSvc: Bill
+        BSvc->>ASvc: appointment.setStatus(COMPLETED)
+    end
+
+    BSvc-->>Ctrl: Bill
+    Ctrl-->>API: 200 OK (BillResponse)
+    API-->>UI: BillDto
+    UI-->>Staff: render itemised receipt
+    Staff->>UI: click "Print / Save Receipt"
+    UI->>Job: printPage(receiptNode)
+    Job-->>UI: printed, or dialog cancelled
+    UI-->>Staff: confirmation, or save-as-file fallback
+</pre>
+  </div>
+  <p class="diagram-caption">Fig. A.3.3 — Sequence diagram: calculating, generating, and printing a bill.</p>
+</section>
+
+<section id="assumptions" class="wide">
+  <h2><span class="num">A.4</span>Assumptions</h2>
+  <p>The brief invites necessary assumptions on design and access, provided they are explained. These are the ones that shape the diagrams above.</p>
+  <div class="assumption-list">
+    <div class="assumption">
+      <span class="label">Access model</span>
+      <p>A single Staff actor covers both <code>ADMIN</code> and <code>STAFF</code> accounts for this iteration. The role is stored and available for a future authorization rule (e.g. restricting reference-data management such as dentist or pricing edits to <code>ADMIN</code>), but no endpoint currently differentiates behaviour by role, so the use case diagram does not invent a permission split the system doesn't enforce.</p>
+    </div>
+    <div class="assumption">
+      <span class="label">Patient matching</span>
+      <p>A returning patient is matched by exact name + contact number rather than a separate "search existing patient" step, keeping registration to the single form implied by the brief's field list. A production system would need a more robust deduplication strategy (e.g. NIC number, fuzzy name matching) — noted here as a deliberate simplification, not an oversight.</p>
+    </div>
+    <div class="assumption">
+      <span class="label">Billing trigger</span>
+      <p>The brief does not describe a separate "treatment completed" step, so a bill is generated on demand from the appointment number, and generating it is what transitions the appointment's status to <code>COMPLETED</code>.</p>
+    </div>
+    <div class="assumption">
+      <span class="label">Web services</span>
+      <p>Task B's "distributed application with web services" requirement is met with a REST/JSON API (Spring Boot) consumed by a separate JavaFX desktop process over HTTP — an industry-standard choice over SOAP or RMI, justified further in the Task B report.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">Sunrise Dental Clinic Appointment &amp; Patient Management System — Task A, CIS6003 Advanced Programming.</div>
+</footer>
