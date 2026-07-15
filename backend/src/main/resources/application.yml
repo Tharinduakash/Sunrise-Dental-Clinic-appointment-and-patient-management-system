@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: dental-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sunrise_dental
+    username: dental_app
+    password: dental_app_pw
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+app:
+  security:
+    jwt-secret: ${JWT_SECRET:sunrise-dental-clinic-dev-secret-key-change-in-production-min-256-bits}
+    jwt-expiration-ms: 3600000
+
+logging:
+  level:
+    lk.icbt.sunrise.dental: INFO
