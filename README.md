@@ -1,4 +1,4 @@
-# Sunrise Dental Clinic - Appointment and Patient Management System
+# Sunrise Dental Clinic — Appointment and Patient Management System
 
 ![CI](https://github.com/Tharinduakash/Sunrise-Dental-Clinic-appointment-and-patient-management-system/actions/workflows/ci.yml/badge.svg)
 
