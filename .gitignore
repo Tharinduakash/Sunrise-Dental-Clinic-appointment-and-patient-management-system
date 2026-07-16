@@ -21,3 +21,6 @@ desktop.ini
 
 # JavaFX / misc local run artifacts
 *.hprof
+
+# Working HTML drafts superseded by docs/reports/*.docx
+docs/*.html
